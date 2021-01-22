@@ -1,0 +1,33 @@
+{
+  "private": true,
+  "name": "my-nextron-app",
+  "description": "My application description",
+  "version": "1.0.0",
+  "author": "Erick Arita <erick.emao@gmail.com>",
+  "main": "app/background.js",
+  "scripts": {
+    "dev": "nextron",
+    "build": "nextron build",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "@types/nedb": "^1.8.11",
+    "electron-serve": "^1.0.0",
+    "nedb": "^1.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.6.4",
+    "@types/react": "^16.9.49",
+    "@types/react-dom": "^16.9.8",
+    "@types/uuid": "^8.3.0",
+    "antd": "^4.10.3",
+    "electron": "^11.1.1",
+    "electron-builder": "^22.9.1",
+    "next": "^10.0.5",
+    "nextron": "^6.0.3",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "typescript": "^4.1.3",
+    "uuid": "^8.3.2"
+  }
+}
