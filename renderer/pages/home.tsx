@@ -1,84 +1,116 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Head from 'next/head';
-import Link from 'next/link';
-import { Button, Form, Input, List } from 'antd'
+import { Button, Form, Input, Space, } from 'antd'
 import 'antd/dist/antd.css'
 import { ipcRenderer } from 'electron';
-import Database from '../../main/database/Database'
+import InputNumber from '../components/helpers/InputNumber'
+import Link from 'next/link';
 
 const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
 };
-Database
+
 const layout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 16 },
 };
-const user = 'Erick';
+interface Product {
+    nombre: string;
+    precio: number;
+    cantidad: number;
+    descripcion: string;
+
+}
 const Home = () => {
-    const [message, setMessage] = useState({ user: user, message: '' });
 
-    const [messages, setMessages] = useState([{
-        user: ''
-        , message: ''
-    }]);
+    const [form] = Form.useForm();
 
-    const m = message.message;
+    const onFinish = () => {
+        const { descripcion, precio, cantidad, nombre } = form.getFieldsValue();
+        const data: Product = {
+            descripcion
+            , precio: precio.number
+            , cantidad: cantidad.number
+            , nombre
+        }
+        ipcRenderer.send('save-product', data)
+        form.resetFields();
+    }
 
-    const onSubmit = (e) => {
-        // e.preventDefault;
-        ipcRenderer.send('set-message', message);
-        setMessages([...messages, message]);
-        setMessage({ ...message, message: m });
+
+    const checkPrice = (_: any, value: { number: number }) => {
+        if (value.number >= 1) {
+            return Promise.resolve();
+        }
+        return Promise.reject('El precio debería ser mayor a cero');
     };
-    const onChange = (e) => {
-        console.log(e.target.value)
-        setMessage({ ...message, message: e.target.value })
-    };
-
-
-    useEffect(() => {
-
-        setMessages([...messages,ipcRenderer.sendSync('get-message')]);
-    }, [])
-
     return (
-        <React.Fragment>
+        <>
             <Head>
                 <title>Home - Nextron (with-typescript)</title>
             </Head>
-            <div>
-                <p>
-                    ⚡ Electron + Next.js ⚡ -
-          <Link href="/next">
-                        <a>Go to next page</a>
-                    </Link>
-                </p>
-                <img src="/images/logo.png" />
-            </div>
-            <List
+
+            {/* <List
                 size='small'
                 dataSource={messages}
                 renderItem={mess => <List.Item>{mess.message}</List.Item>}
-            />
-            <Form {...layout} name='form' onFinish={onSubmit} >
+            /> */}
+            <Link href="/next">
+                next
+            </Link>
+            <Form {...layout} name="control-hooks" style={{ width: "100%" }} form={form} onFinish={onFinish} >
+
                 <Form.Item
                     wrapperCol={{ span: 8 }}
 
-                    label='Escribe tu mensaje'
-                    name='message'
+                    label='Nombre del Producto'
+                    name='nombre'
                     rules={[{ required: true, message: 'No deje el campo vacio', type: 'string' }]}
                 >
-                    <Input value={message.message} onChange={onChange} />
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    wrapperCol={{ span: 8 }}
+
+                    label='Cantidad'
+                    name='cantidad'
+                    rules={[{
+                        required: true, message: 'No deje el campo vacio',
+                        validator: checkPrice
+                    }]}
+
+                >
+                    <InputNumber />
+                </Form.Item>
+                <Form.Item
+                    wrapperCol={{ span: 8 }}
+                    // style={{ width: '100%' }}
+                    label='Precio'
+                    name='precio'
+                    rules={[{
+                        required: true, whitespace: false,
+                        validator: checkPrice
+                    }]}
+                >
+                    <InputNumber />
+                </Form.Item>
+                <Form.Item
+                    wrapperCol={{ span: 8 }}
+                    label='Descripción'
+                    name='descripcion'
+                    rules={[{ type: 'string', required: true, message: 'No deje el campo vacio' }]}
+                >
+                    <Input />
                 </Form.Item>
 
                 <Form.Item  {...tailLayout}>
-                    <Button type="primary" htmlType="submit" >
+                    <Button type="primary" htmlType="submit"  >
                         Enviar
                     </Button>
                 </Form.Item>
             </Form>
-        </React.Fragment>
+
+        </>
     );
 };
 
