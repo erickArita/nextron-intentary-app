@@ -1,6 +1,8 @@
-import { Products } from './model'
+import { IpcMainInvokeEvent } from 'electron'
+import models, { ProductType } from './model'
 
-export const saveProduct = (event, data) => {
-    // const product = new Products({ ...data })
-    console.log( data)
+export const saveProduct = (_event: IpcMainInvokeEvent, { cantidad, descripcion, nombre, precio }: ProductType) => {
+
+      models.addProduct({ cantidad, descripcion, nombre, precio })
+      return 'cerdo'
 }

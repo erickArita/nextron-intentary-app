@@ -1,7 +1,7 @@
 {
   "private": true,
-  "name": "my-nextron-app",
-  "description": "My application description",
+  "name": "inventario-app",
+  "description": "Aplicacion para manejo de inventario creada con electronjs",
   "version": "1.0.0",
   "author": "Erick Arita <erick.emao@gmail.com>",
   "main": "app/background.js",

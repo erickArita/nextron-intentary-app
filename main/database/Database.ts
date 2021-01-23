@@ -1,10 +1,8 @@
 
 import Datastore from 'nedb'
-
-let databases: { inventario: Datastore<any>; usuarios: Datastore<any>; };
-databases.inventario = new Datastore({ filename: './inventario.db', autoload: true });
-databases.usuarios = new Datastore({ filename: './users', autoload: true })
+import { join} from 'path'
+let databases = new Datastore({ filename:join('inventario.db') ,autoload:true});
 
 
 
-export default { ...databases };
+export default databases;

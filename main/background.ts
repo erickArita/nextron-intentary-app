@@ -2,7 +2,6 @@ import { app } from 'electron';
 import serve from 'electron-serve';
 import { BrowserWindow } from 'electron/main';
 import { createWindow } from './helpers';
-import './services/Inventario/main'
 const isProd: boolean = process.env.NODE_ENV === 'production';
 if (isProd) {
   serve({ directory: 'app' });
@@ -35,3 +34,4 @@ let mainWindow: BrowserWindow;
 app.on('window-all-closed', () => {
   app.quit();
 });
+import './services/Inventario/main'

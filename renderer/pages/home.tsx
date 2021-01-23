@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
-import { Button, Form, Input, Space, } from 'antd'
+import { Button, Form, Input } from 'antd'
 import 'antd/dist/antd.css'
-import { ipcRenderer } from 'electron';
 import InputNumber from '../components/helpers/InputNumber'
 import Link from 'next/link';
+import { ipcRenderer } from 'electron';
 
 const tailLayout = {
     wrapperCol: { offset: 8, span: 16 },
@@ -21,11 +21,15 @@ interface Product {
     descripcion: string;
 
 }
+
+
+
+
+
 const Home = () => {
 
     const [form] = Form.useForm();
-
-    const onFinish = () => {
+    const onFinish = async () => {
         const { descripcion, precio, cantidad, nombre } = form.getFieldsValue();
         const data: Product = {
             descripcion
@@ -33,9 +37,20 @@ const Home = () => {
             , cantidad: cantidad.number
             , nombre
         }
-        ipcRenderer.send('save-product', data)
+        const c = await ipcRenderer.invoke('save-product', data)
+        console.log(c)
+        ipcRenderer.send('save-data?', 'cerdo')
         form.resetFields();
     }
+    useEffect(() => {
+        ipcRenderer.on('save-data?', (e, args) => {
+            console.log(args, 'algo del main')
+        })
+        return () => {
+            ipcRenderer.removeAllListeners('save-data?')
+        }
+
+    }, [])
 
 
     const checkPrice = (_: any, value: { number: number }) => {
