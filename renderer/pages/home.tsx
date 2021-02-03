@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, List } from 'antd'
 import 'antd/dist/antd.css'
 import InputNumber from '../components/helpers/InputNumber'
 import Link from 'next/link';
@@ -15,10 +15,7 @@ const layout = {
     wrapperCol: { span: 16 },
 };
 interface Product {
-    nombre: string;
-    precio: number;
-    cantidad: number;
-    descripcion: string;
+    nombre: string; precio: number; cantidad: number; descripcion: string;
 
 }
 
@@ -29,7 +26,8 @@ interface Product {
 const Home = () => {
 
     const [form] = Form.useForm();
-    const onFinish = async () => {
+    const [products, setProducts] = useState([])
+    const onFinish = () => {
         const { descripcion, precio, cantidad, nombre } = form.getFieldsValue();
         const data: Product = {
             descripcion
@@ -37,17 +35,27 @@ const Home = () => {
             , cantidad: cantidad.number
             , nombre
         }
-        const c = await ipcRenderer.invoke('save-product', data)
-        console.log(c)
-        ipcRenderer.send('save-data?', 'cerdo')
+        ipcRenderer.invoke('save-product', data)
+        ipcRenderer.invoke('get-product', 'd')
         form.resetFields();
     }
     useEffect(() => {
-        ipcRenderer.on('save-data?', (e, args) => {
-            console.log(args, 'algo del main')
+        ipcRenderer.on('save-product', (e, args) => {
+            console.log(args, 'algo del main save')
         })
         return () => {
-            ipcRenderer.removeAllListeners('save-data?')
+            ipcRenderer.removeAllListeners('save-product')
+        }
+        
+    }, [])
+    useEffect(() => {
+        ipcRenderer.invoke('get-product', 'd')
+        ipcRenderer.on('get-product', (e, args) => {
+            setProducts([...args])
+            console.log(args, 'algo del main get')
+        })
+        return () => {
+            ipcRenderer.removeAllListeners('get-product')
         }
 
     }, [])
@@ -65,11 +73,14 @@ const Home = () => {
                 <title>Home - Nextron (with-typescript)</title>
             </Head>
 
-            {/* <List
+            <List
                 size='small'
-                dataSource={messages}
-                renderItem={mess => <List.Item>{mess.message}</List.Item>}
-            /> */}
+                dataSource={products}
+                renderItem={({ nombre,
+                    precio,
+                    cantidad,
+                    descripcion }) => <List.Item>{`${nombre},${precio},${cantidad},${descripcion}`}</List.Item>}
+            />
             <Link href="/next">
                 next
             </Link>
