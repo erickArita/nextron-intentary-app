@@ -5,12 +5,13 @@ import { createWindow } from './helpers';
 const isProd: boolean = process.env.NODE_ENV === 'production';
 if (isProd) {
   serve({ directory: 'app' });
+  require('update-electron-app')()
 } else {
   app.setPath('userData', `${app.getPath('userData')} (development)`);
 }
-
 let mainWindow: BrowserWindow;
 
+import './services/Inventario/main'
 (async () => {
   await app.whenReady();
 
@@ -34,4 +35,3 @@ let mainWindow: BrowserWindow;
 app.on('window-all-closed', () => {
   app.quit();
 });
-import './services/Inventario/main'

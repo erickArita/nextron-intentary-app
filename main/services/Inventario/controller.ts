@@ -1,8 +1,13 @@
 import { IpcMainInvokeEvent } from 'electron'
-import models, { ProductType } from './model'
+import { ProductType } from './interfaces/interfaces'
+import models from './model'
 
-export const saveProduct = (_event: IpcMainInvokeEvent, { cantidad, descripcion, nombre, precio }: ProductType) => {
+export const saveProduct = (event: IpcMainInvokeEvent, { cantidad, descripcion, nombre, precio }: ProductType) => {
 
-      models.addProduct({ cantidad, descripcion, nombre, precio })
-      return 'cerdo'
+      models.addProduct(event, { cantidad, descripcion, nombre, precio })
+}
+
+export const getPaginateProduct = (event: IpcMainInvokeEvent, filters = { paginate: 10 }) => {
+
+      models.getProducts(event, filters)
 }

@@ -1,19 +1,20 @@
 // aqui se crean todas las funciones relacionadas con el negocio
 //guardar eliminar etc funciones  simples?
 
-import {insertData} from './dao'
-export interface ProductType {
-    nombre: string
-    , descripcion: string
-    , cantidad: number
-    , precio: number
-}
+import { IpcMainInvokeEvent } from 'electron/main';
+import { getPaginateData, insertData } from './dao'
+import { ProductType } from './interfaces/interfaces';
+
 
 export default {
-    addProduct: (product: ProductType) => {
-        
-        insertData(product);
+    addProduct: (event:IpcMainInvokeEvent,product: ProductType) => {
 
+        insertData(event,product);
+
+    },
+    getProducts: (event: IpcMainInvokeEvent, filters) => {
+        getPaginateData(event, filters)
     }
+
 }
 

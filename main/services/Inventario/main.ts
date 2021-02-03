@@ -1,6 +1,8 @@
 import { ipcMain as main } from 'electron'
 
-import { saveProduct } from './controller'
+import { saveProduct, getPaginateProduct } from './controller'
 
 
-main.handle('save-product',  saveProduct)
+main.handle('save-product', saveProduct)
+
+main.handle('get-product', getPaginateProduct)
