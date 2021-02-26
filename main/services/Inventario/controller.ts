@@ -1,13 +1,17 @@
 import { IpcMainInvokeEvent } from 'electron'
-import { ProductType } from './interfaces/interfaces'
-import models from './model'
+import { Filters, ProductType } from './interfaces/productTypes'
+import { getPaginateData, insertData } from './dao'
 
-export const saveProduct = (event: IpcMainInvokeEvent, { cantidad, descripcion, nombre, precio }: ProductType) => {
-
-      models.addProduct(event, { cantidad, descripcion, nombre, precio })
+export const saveProduct = async(event: IpcMainInvokeEvent, product: ProductType) => {
+	const doc = await insertData(product)
+	event.sender.send('save-product', doc)
 }
 
-export const getPaginateProduct = (event: IpcMainInvokeEvent, filters = { paginate: 10 }) => {
-
-      models.getProducts(event, filters)
+export const getPaginateProduct =  async(
+	event: IpcMainInvokeEvent,
+	filters: Filters = { limit: 10 }
+) => {
+	const docs = await getPaginateData(filters)
+	console.log(docs)
+	event.sender.send('get-product', docs)
 }

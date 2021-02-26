@@ -2,13 +2,16 @@ import { app } from 'electron';
 import serve from 'electron-serve';
 import { BrowserWindow } from 'electron/main';
 import { createWindow } from './helpers';
+
 const isProd: boolean = process.env.NODE_ENV === 'production';
+
 if (isProd) {
   serve({ directory: 'app' });
   require('update-electron-app')()
 } else {
   app.setPath('userData', `${app.getPath('userData')} (development)`);
 }
+
 let mainWindow: BrowserWindow;
 
 import './services/Inventario/main'
@@ -18,7 +21,10 @@ import './services/Inventario/main'
   mainWindow = createWindow('main', {
     width: 1000,
     height: 600,
-
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    }
   });
 
   if (isProd) {

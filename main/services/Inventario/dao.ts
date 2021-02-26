@@ -5,21 +5,27 @@ import { IpcMainInvokeEvent } from 'electron/main';
 import databases from '../../database/Database'
 import { Filters, ProductType } from './interfaces/interfaces';
 
-export const insertData = (event: IpcMainInvokeEvent, data: ProductType) => {
-
-    databases.insert(data, (err, docs) => {
-
-        event.sender.send('save-product', ['guardado', { error: err, data: docs }])
-    })
+export const insertData = async (data: ProductType) => {
+    try {
+        const doc = await databases.insert(data);
+        return doc
+    } catch (error) {
+        console.log(error)
+    }
 }
 
+export const getPaginateData = async(filters: Filters) => {
+    try {
+        const doc =await databases.find({ precio: { $gte: 1000 } })
+            .limit(filters.limit)
+            .skip(2)
+            .exec()
+        return doc;
+    } catch (error) {
+        console.log(error)
 
-export const getPaginateData = (event: IpcMainInvokeEvent, filters: Filters) => {
-    databases.find({ precio: { $gte: 1000 } }).limit(filters.limit).exec((err, docs) => {
+    }
 
-        event.sender.send('get-product', docs)
-
-    })
 }
 
 
