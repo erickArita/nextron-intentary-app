@@ -1,4 +1,3 @@
-
 import { handle } from '../../../library/router'
 import {
     saveProduct,
@@ -6,7 +5,6 @@ import {
     deleteProduct,
     editProduct
 } from './controller'
-
 
 const { del, edit, get, save } = handle('Product')
 save(saveProduct)
