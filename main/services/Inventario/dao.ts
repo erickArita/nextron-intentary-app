@@ -1,9 +1,8 @@
 // data acces object 
 // esta es la capa que se comunica con la base de datos 
 // e imprementa todo lo relacionado a interactuar con la db
-import { IpcMainInvokeEvent } from 'electron/main';
 import databases from '../../database/Database'
-import { Filters, ProductType } from './interfaces/interfaces';
+import { ProductType, Filters, Fields } from './interfaces/productTypes';
 
 export const insertData = async (data: ProductType) => {
     try {
@@ -11,21 +10,40 @@ export const insertData = async (data: ProductType) => {
         return doc
     } catch (error) {
         console.log(error)
+        return error
     }
 }
 
-export const getPaginateData = async(filters: Filters) => {
+export const getPaginateData = async (field: Fields = {}, filters: Filters) => {
     try {
-        const doc =await databases.find({ precio: { $gte: 1000 } })
+        const docs = await databases.find(field)
             .limit(filters.limit)
-            .skip(2)
             .exec()
-        return doc;
+        return docs;
     } catch (error) {
         console.log(error)
-
+        return error
     }
-
 }
 
+
+export const edit = async (field: Fields, multi: boolean = false) => {
+    try {
+        const docs = await databases.update({ field }, { multi: multi })
+        return docs;
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
+
+export const deleteBy = async (field: Fields, multi: boolean = false) => {
+    try {
+        const docs = await databases.remove({ field }, { multi: multi })
+        return docs;
+    } catch (error) {
+        console.log(error)
+        return error
+    }
+}
 

@@ -1,8 +1,18 @@
-import { ipcMain as main } from 'electron'
 
-import { saveProduct, getPaginateProduct } from './controller'
+import { handle } from '../../../library/router'
+import {
+    saveProduct,
+    getPaginateProduct,
+    deleteProduct,
+    editProduct
+} from './controller'
 
 
-main.handle('save-product', saveProduct)
+const { del, edit, get, save } = handle('Product')
+save(saveProduct)
+get(getPaginateProduct)
+edit(editProduct)
+del(deleteProduct)
 
-main.handle('get-product', getPaginateProduct)
+
+

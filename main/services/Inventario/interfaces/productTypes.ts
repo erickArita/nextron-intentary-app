@@ -1,11 +1,18 @@
 export interface Filters {
     limit: number;
-
 }
 
 export interface ProductType {
-    nombre: string
-    , descripcion: string
-    , cantidad: number
-    , precio: number
+    _id?: string;
+    nombre: string;
+    descripcion: string;
+    cantidad: number;
+    precio: number;
+}
+export interface Fields {
+    _id?: string
+    nombre?: string;
+    descripcion?: string;
+    cantidad?: number;
+    precio?: number;
 }

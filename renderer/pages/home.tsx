@@ -46,13 +46,13 @@ const Home = () => {
 
     }, [])
     useEffect(() => {
-        ipcRenderer.invoke('get-product', 'd')
-        ipcRenderer.on('get-product', (e, args) => {
+        ipcRenderer.invoke('get-products', 'd')
+        ipcRenderer.on('get-products', (e, args) => {
             setProducts([...products, args])
             console.log(args, 'algo del main get')
         })
         return () => {
-            ipcRenderer.removeAllListeners('get-product')
+            ipcRenderer.removeAllListeners('get-products')
         }
 
     }, [])

@@ -14,10 +14,9 @@ if (isProd) {
 
 let mainWindow: BrowserWindow;
 
-import './services/Inventario/main'
 (async () => {
   await app.whenReady();
-
+  
   mainWindow = createWindow('main', {
     width: 1000,
     height: 600,
@@ -26,10 +25,10 @@ import './services/Inventario/main'
       contextIsolation: false,
     }
   });
-
+  
   if (isProd) {
     await mainWindow.loadURL('app://./home.html');
-
+    
   } else {
     const port = process.argv[2];
     await mainWindow.loadURL(`http://localhost:${port}/home`);
@@ -37,6 +36,7 @@ import './services/Inventario/main'
   }
 })();
 
+import './app'
 
 app.on('window-all-closed', () => {
   app.quit();
