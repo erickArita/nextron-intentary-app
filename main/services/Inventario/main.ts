@@ -1,4 +1,4 @@
-import { handle } from '../../../library/router'
+import Router from '../../../library/Router'
 import {
     saveProduct,
     getPaginateProduct,
@@ -6,7 +6,8 @@ import {
     editProduct
 } from './controller'
 
-const { del, edit, get, save } = handle('Product')
+const { del, edit, get, save } = Router('Product')
+
 save(saveProduct)
 get(getPaginateProduct)
 edit(editProduct)

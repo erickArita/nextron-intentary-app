@@ -33,29 +33,29 @@ const Home = () => {
             , cantidad: cantidad.number
             , nombre
         }
-        ipcRenderer.invoke('save-product', data)
+        ipcRenderer.invoke('saveProduct', data)
         form.resetFields();
     }
     useEffect(() => {
-        ipcRenderer.on('save-product', (e, args) => {
+        ipcRenderer.on('saveProduct', (e, args) => {
             console.log(args, 'algo del main save')
         })
         return () => {
-            ipcRenderer.removeAllListeners('save-product')
+            ipcRenderer.removeAllListeners('saveProduct')
         }
-
+        
     }, [])
-    useEffect(() => {
-        ipcRenderer.invoke('get-products', 'd')
-        ipcRenderer.on('get-products', (e, args) => {
-            setProducts([...products, args])
-            console.log(args, 'algo del main get')
-        })
-        return () => {
-            ipcRenderer.removeAllListeners('get-products')
-        }
+    // useEffect(() => {
+    //     ipcRenderer.invoke('get-products', 'd')
+    //     ipcRenderer.on('get-products', (e, args) => {
+    //         setProducts([...products, args])
+    //         console.log(args, 'algo del main get')
+    //     })
+    //     return () => {
+    //         ipcRenderer.removeAllListeners('get-products')
+    //     }
 
-    }, [])
+    // }, [])
 
 
     const checkPrice = (_: any, value: { number: number }) => {

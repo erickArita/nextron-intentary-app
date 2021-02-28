@@ -1,15 +1,12 @@
 import { IpcMainInvokeEvent as InvokeEvent } from 'electron'
 import { Fields, Filters, ProductType } from './interfaces/productTypes'
 import { deleteBy, edit, getPaginateData, insertData } from './dao'
-import { Method } from '../../../api/enumChannels'
 
 
-
-
-export const saveProduct = async (event: InvokeEvent, product: ProductType, channel) => {
-	
-	// const doc = await insertData(product)
-	console.log(channel)
+export const saveProduct = async (req, res) => {
+	console.log(req, 'req')
+	const data = await insertData(req)
+	res(data)
 }
 
 export const getPaginateProduct = async (event: InvokeEvent, field: Fields, filters: Filters = { limit: 10 }) => {

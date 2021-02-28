@@ -21,6 +21,7 @@ let mainWindow: BrowserWindow;
     width: 1000,
     height: 600,
     webPreferences: {
+      enableRemoteModule:false,
       nodeIntegration: true,
       contextIsolation: false,
     }
@@ -35,7 +36,7 @@ let mainWindow: BrowserWindow;
     // mainWindow.webContents.openDevTools();
   }
 })();
-
+ 
 import './app'
 
 app.on('window-all-closed', () => {
