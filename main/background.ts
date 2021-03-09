@@ -7,7 +7,11 @@ const isProd: boolean = process.env.NODE_ENV === 'production';
 
 if (isProd) {
   serve({ directory: 'app' });
- require('update-electron-app')()
+  require('update-electron-app')({
+    repo: 'erickArita/nextron-intentary-app',
+    updateInterval: '5 minutes',
+    logger: require('electron-log')
+  })
 } else {
   app.setPath('userData', `${app.getPath('userData')} (development)`);
 }
@@ -16,27 +20,27 @@ let mainWindow: BrowserWindow;
 
 (async () => {
   await app.whenReady();
-  
+
   mainWindow = createWindow('main', {
     width: 1000,
     height: 600,
     webPreferences: {
-      enableRemoteModule:false,
+      enableRemoteModule: false,
       nodeIntegration: true,
       contextIsolation: false,
     }
   });
-  
+
   if (isProd) {
     await mainWindow.loadURL('app://./home.html');
-    
+
   } else {
     const port = process.argv[2];
     await mainWindow.loadURL(`http://localhost:${port}/home`);
     // mainWindow.webContents.openDevTools();
   }
 })();
- 
+
 import './app'
 
 app.on('window-all-closed', () => {

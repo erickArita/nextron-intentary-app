@@ -1,13 +1,14 @@
 {
+  "private": false,
   "name": "inventario-app",
   "description": "Aplicacion para manejo de inventario creada con electronjs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Erick Arita <erick.emao@gmail.com>",
   "main": "app/background.js",
   "scripts": {
     "dev": "nextron",
     "build": "nextron build",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps --win --publish always"
   },
   "dependencies": {
     "electron-log": "^4.3.1",
@@ -34,5 +35,21 @@
   "repository": {
     "type": "github",
     "url": "https://github.com/erickArita/nextron-intentary-app.git"
+  },
+  "build": {
+    "win": {
+      "publish": [
+        "github",
+        "bintray"
+      ],
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
   }
 }
