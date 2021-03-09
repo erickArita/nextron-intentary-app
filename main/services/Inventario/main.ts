@@ -1,17 +1,15 @@
 import Router from '../../../library/Router'
 import {
     saveProduct,
-    getPaginateProduct,
+    getPaginateProducts,
     deleteProduct,
-    editProduct
+    editProduct,
+    getProduct
 } from './controller'
 
 const { del, edit, get, save } = Router('Product')
-
 save(saveProduct)
-get(getPaginateProduct)
+get(getPaginateProducts)
+get(getProduct, 'ById')
 edit(editProduct)
 del(deleteProduct)
-
-
-
