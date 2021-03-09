@@ -7,7 +7,7 @@ const isProd: boolean = process.env.NODE_ENV === 'production';
 
 if (isProd) {
   serve({ directory: 'app' });
-  require('update-electron-app')()
+ require('update-electron-app')()
 } else {
   app.setPath('userData', `${app.getPath('userData')} (development)`);
 }
