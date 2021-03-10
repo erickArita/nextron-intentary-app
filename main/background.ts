@@ -8,7 +8,6 @@ const isProd: boolean = process.env.NODE_ENV === 'production';
 autoUpdate({ checkFrequency: 30000 })
 if (isProd) {
   serve({ directory: 'app' });
-
 } else {
   app.setPath('userData', `${app.getPath('userData')} (development)`);
 }

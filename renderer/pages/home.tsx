@@ -126,7 +126,7 @@ const Home = () => {
           </Form.Item>
         </Form>
 
-        <Table dataSource={products} columns={tableColums} style={{ width: '100%' }} />
+        <Table dataSource={products}  columns={tableColums} style={{ width: '100%' }} />
         <style jsx>{`
         .container{
           display: flex;
