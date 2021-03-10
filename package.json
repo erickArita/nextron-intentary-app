@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "nextron",
     "build": "nextron build",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder create-self-signed-cert --publisher 'hola' "
   },
   "dependencies": {
     "electron-log": "^4.3.1",
