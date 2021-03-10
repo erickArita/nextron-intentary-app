@@ -2,16 +2,13 @@ import { app } from 'electron';
 import serve from 'electron-serve';
 import { BrowserWindow } from 'electron/main';
 import { createWindow } from './helpers';
-
+import { autoUpdate } from 'electron-auto-update';
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
+autoUpdate({ checkFrequency: 30000 })
 if (isProd) {
   serve({ directory: 'app' });
-  require('update-electron-app')({
-    repo: 'erickArita/nextron-intentary-app',
-    updateInterval: '5 minutes',
-    logger: require('electron-log')
-  })
+
 } else {
   app.setPath('userData', `${app.getPath('userData')} (development)`);
 }
