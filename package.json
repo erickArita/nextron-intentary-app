@@ -9,7 +9,8 @@
     "dev": "nextron",
     "build": "nextron build -p",
     "postinstall": "electron-builder install-app-deps",
-    "winbuil": "electron-builder -p always"
+    "winbuil": "electron-builder -p always",
+    "signed": "electron-builder create-self-signed-cert -p inventario_app"
   },
   "dependencies": {
     "electron-auto-update": "^1.2.2",
@@ -47,7 +48,7 @@
       "publish": [
         "github"
       ],
-      "certificateFile": "./cert.pfx",
+      "certificateFile": "inventario_app.pfx",
       "target": "nsis"
     }
   }
