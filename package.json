@@ -2,36 +2,36 @@
   "private": false,
   "name": "inventario-app",
   "description": "Aplicacion para manejo de inventario creada con electronjs",
-  "version": "0.0.10",
+  "version": "0.0.12",
   "author": "Erick Arita <erick.emao@gmail.com>",
   "main": "app/background.js",
   "scripts": {
-    "dev": "nextron",
-    "build": "nextron build -p",
+    "dev": "nextron --run-only",
+    "build": "nextron build",
     "postinstall": "electron-builder install-app-deps",
-    "winbuil": "electron-builder -p always",
+    "winbuil": "nextron build",
     "signed": "electron-builder create-self-signed-cert -p inventario_app"
   },
   "dependencies": {
     "electron-auto-update": "^1.2.2",
-    "electron-log": "^4.3.1",
+    "electron-log": "^4.3.2",
     "electron-serve": "^1.0.0",
     "electron-store": "^6.0.1",
     "nedb-promises": "^4.1.1"
   },
   "devDependencies": {
-    "@types/node": "^14.6.4",
-    "@types/react": "^16.9.49",
-    "@types/react-dom": "^16.9.8",
+    "@types/node": "^14.14.33",
+    "@types/react": "^16.14.5",
+    "@types/react-dom": "^16.9.11",
     "@types/uuid": "^8.3.0",
-    "antd": "^4.10.3",
+    "antd": "^4.13.1",
     "electron": "^11.3.0",
-    "electron-builder": "^22.9.1",
-    "next": "^10.0.5",
-    "nextron": "^6.0.3",
+    "electron-builder": "^22.10.5",
+    "next": "^10.0.8",
+    "nextron": "^6.0.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "typescript": "^4.1.3",
+    "typescript": "^4.2.3",
     "uuid": "^8.3.2"
   },
   "repository": {
@@ -43,13 +43,14 @@
     "releaseType": "release"
   },
   "build": {
+    "buildDependenciesFromSource": true,
     "appId": "com.inventario.app",
     "win": {
       "publish": [
         "github"
       ],
       "certificateFile": "inventario_app.pfx",
-      "target": "nsis"
+      "target": "nsis-web"
     }
   }
 }

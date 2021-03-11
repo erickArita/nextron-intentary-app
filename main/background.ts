@@ -13,6 +13,7 @@ if (isProd) {
 }
 
 let mainWindow: BrowserWindow;
+console.log('hola');
 
 (async () => {
   await app.whenReady();
