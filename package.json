@@ -7,9 +7,9 @@
   "main": "app/background.js",
   "scripts": {
     "dev": "nextron --run-only",
-    "build": "nextron build",
+    "build": "nextron build -p always ",
     "postinstall": "electron-builder install-app-deps",
-    "winbuil": "nextron build",
+    "winbuil": "nextron build ",
     "signed": "electron-builder create-self-signed-cert -p inventario_app"
   },
   "dependencies": {
@@ -38,19 +38,21 @@
     "type": "git",
     "url": "https://github.com/erickArita/nextron-intentary-app.git"
   },
-  "publish": {
-    "provider": "github",
-    "releaseType": "release"
-  },
   "build": {
+    "productName": "inventario-app",
     "buildDependenciesFromSource": true,
     "appId": "com.inventario.app",
     "win": {
-      "publish": [
-        "github"
-      ],
+      "publish": {
+        "provider": "github",
+        "owner": "erickArita",
+        "repo": "nextron-intentary-app",
+        "releaseType": "release"
+      },
       "certificateFile": "inventario_app.pfx",
-      "target": "nsis-web"
+      "target": [
+        "nsis"
+      ]
     }
   }
 }

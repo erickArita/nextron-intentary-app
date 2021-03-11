@@ -5,7 +5,7 @@ import { createWindow } from './helpers';
 import { autoUpdate } from 'electron-auto-update';
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
-autoUpdate({ checkFrequency: 30000 })
+
 if (isProd) {
   serve({ directory: 'app' });
 } else {
@@ -13,7 +13,8 @@ if (isProd) {
 }
 
 let mainWindow: BrowserWindow;
- 
+
+autoUpdate({ checkFrequency: 30000 })
 (async () => {
   await app.whenReady();
 
@@ -38,7 +39,6 @@ let mainWindow: BrowserWindow;
 })();
 
 import './app'
-
 app.on('window-all-closed', () => {
   app.quit();
 });
